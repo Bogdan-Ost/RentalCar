@@ -1,16 +1,21 @@
-import Header from "@/components/Header/Header";
+import type { Metadata } from "next";
 import "./globals.css";
+import Providers from "@/components/providers/Providers"; // Оновлений шлях
+
+export const metadata: Metadata = {
+  title: "Rental Car",
+  description: "Car rental application",
+};
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
