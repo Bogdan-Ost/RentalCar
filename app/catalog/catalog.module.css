@@ -1,0 +1,97 @@
+@reference "tailwindcss";
+
+.catalog {
+  @apply max-w-[1184px] mx-auto px-4 py-8 font-sans;
+}
+
+.filterForm {
+  @apply flex flex-wrap items-end gap-[18px] mb-[50px];
+}
+
+.inputWrapper {
+  @apply flex flex-col gap-[8px];
+}
+
+.label {
+  @apply text-[14px] font-medium text-[#8A8A89];
+}
+
+.selectBrand {
+  @apply w-[224px] h-[48px] px-[18px] py-[14px] bg-[#F7F7FB] border-none rounded-[14px] text-[18px] font-medium text-[#121417] outline-none appearance-none cursor-pointer;
+}
+
+.selectPrice {
+  @apply w-[125px] h-[48px] px-[18px] py-[14px] bg-[#F7F7FB] border-none rounded-[14px] text-[18px] font-medium text-[#121417] outline-none appearance-none cursor-pointer;
+}
+
+.mileageInputs {
+  @apply flex h-[48px];
+}
+
+.inputMin {
+  @apply w-[160px] h-full px-[24px] bg-[#F7F7FB] border-none border-r border-[rgba(18,20,23,0.05)] rounded-l-[14px] text-[18px] font-medium text-[#121417] outline-none placeholder-[#121417];
+}
+
+.inputMax {
+  @apply w-[160px] h-full px-[24px] bg-[#F7F7FB] border-none rounded-r-[14px] text-[18px] font-medium text-[#121417] outline-none placeholder-[#121417];
+}
+
+.searchBtn {
+  @apply h-[48px] px-[44px] bg-[#3470FF] hover:bg-[#0B44CD] text-white font-semibold text-[14px] rounded-[12px] transition-colors cursor-pointer;
+}
+
+.statusText {
+  @apply text-center text-[18px] text-[#121417];
+}
+
+.errorText {
+  @apply text-center text-[18px] text-red-500;
+}
+
+.carsGrid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-[29px] gap-y-[50px] mb-[100px];
+}
+
+.carCard {
+  @apply flex flex-col h-[426px] w-full bg-white rounded-[14px] overflow-hidden;
+}
+
+.imgContainer {
+  @apply relative w-full h-[268px] mb-[14px] bg-[#F3F3F2] rounded-[14px] overflow-hidden;
+}
+
+.cardImg {
+  @apply w-full h-full object-cover;
+}
+
+.cardHeader {
+  @apply flex justify-between items-center mb-[8px] text-[16px] font-medium text-[#121417];
+}
+
+.cardTitle {
+  @apply truncate max-w-[80%];
+}
+
+.accentText {
+  @apply text-[#3470FF];
+}
+
+.tagsInfo {
+  @apply flex flex-wrap gap-x-[6px] gap-y-[4px] text-[12px] font-normal text-[rgba(18,20,23,0.5)] leading-[18px] mb-[28px] overflow-hidden h-[40px];
+}
+
+.tagItem {
+  @apply after:content-['|'] after:ml-[6px] after:text-[rgba(18,20,23,0.1)] last:after:content-none;
+}
+
+.readMoreBtn {
+  @apply mt-auto flex justify-center items-center w-full h-[44px] bg-[#3470FF] hover:bg-[#0B44CD] text-white font-semibold text-[14px] rounded-[12px] transition-colors text-center;
+}
+
+.loadMoreContainer {
+  @apply flex justify-center mb-[150px];
+}
+
+.loadMoreBtn {
+  @apply text-[16px] font-medium text-[#3470FF] hover:text-[#0B44CD] underline transition-colors cursor-pointer disabled:text-gray-400 disabled:no-underline;
+}
