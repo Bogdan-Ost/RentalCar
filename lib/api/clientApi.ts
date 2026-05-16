@@ -1,25 +1,62 @@
-import { Car, FilterParams } from "@/types/types";
-import axios from "axios";
+import { Car, CarRequestParams, FilterParams } from "@/types/types";
+import { carRentalApi } from "./api";
 
-export const carRentalApi = axios.create({
-  baseURL: "https://car-rental-api.goit.global",
-});
-
-export interface ApiResponse {
-  cars: Car[]; // Описуємо структуру відповіді з Swagger
+export interface CarApiResponse {
+  cars: Car[];
+  page: number;
+  perPage: number;
+  totalCars: number;
+  totalPages: number;
 }
 
-export const getCars = async (page: number, filters: any): Promise<Car[]> => {
-  const res = await carRentalApi.get<ApiResponse>("/cars", {
-    params: {
-      page,
-      limit: 12,
-      brand: filters.brand,
-      rentalPrice: filters.rentalPrice,
-      minMileage: filters.minMileage,
-      maxMileage: filters.maxMileage,
-    },
+export interface FilterMetadata {
+  brands: string[];
+  price: {
+    min: number;
+    max: number;
+  };
+}
+
+export const getCars = async (
+  page: number,
+  filters: FilterParams,
+): Promise<CarApiResponse> => {
+  const params: Record<string, any> = {
+    page,
+    perPage: 12,
+  };
+
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value !== undefined && value !== "") {
+      params[key] = value;
+    }
   });
 
-  return res.data.cars || [];
+  const res = await carRentalApi.get<CarApiResponse>("/cars", { params });
+
+  return res.data;
+};
+
+export const getFilterMetadata = async (): Promise<FilterMetadata> => {
+  const res = await carRentalApi.get<FilterMetadata>("/cars/filters");
+  return res.data;
+};
+
+export const getCarById = async (carId: string): Promise<Car> => {
+  const res = await carRentalApi.get<Car>(`/cars/${carId}`);
+  return res.data;
+};
+
+export interface BookingData {
+  name: string;
+  email: string;
+  comment: string;
+}
+
+export const createBookingRequest = async (
+  carId: string,
+  data: BookingData,
+) => {
+  const res = await carRentalApi.post(`/cars/${carId}/booking-requests`, data);
+  return res.data;
 };

@@ -1,0 +1,60 @@
+.header {
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f2f4f7;
+}
+
+.container {
+  /* Фіксована ширина десктопа згідно з вашими попередніми сторінками */
+  width: 1150px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  height: 72px; /* Стандартна висота хедера за макетом */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Логотип */
+.logo {
+  font-family: sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #121417;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.logoAccent {
+  color: #3470ff; /* Фірмовий синій колір */
+}
+
+/* Навігація */
+.navigation {
+  display: flex;
+  gap: 2rem; /* Відстань між посиланнями */
+}
+
+.navLink {
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #121417;
+  text-decoration: none;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  padding: 4px 0;
+}
+
+.navLink:hover {
+  color: #3470ff;
+}
+
+/* Активний стан посилання згідно з макетом (синій колір) */
+.activeLink {
+  color: #3470ff;
+  font-weight: 600;
+}

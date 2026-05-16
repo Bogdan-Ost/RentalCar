@@ -1,97 +1,302 @@
-@reference "tailwindcss";
-
 .catalog {
-  @apply max-w-[1184px] mx-auto px-4 py-8 font-sans;
+  max-width: 1184px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  font-family: sans-serif;
 }
 
 .filterForm {
-  @apply flex flex-wrap items-end gap-[18px] mb-[50px];
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 50px;
 }
 
 .inputWrapper {
-  @apply flex flex-col gap-[8px];
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .label {
-  @apply text-[14px] font-medium text-[#8A8A89];
+  font-size: 14px;
+  font-weight: 500;
+  color: #8a8a89;
 }
 
 .selectBrand {
-  @apply w-[224px] h-[48px] px-[18px] py-[14px] bg-[#F7F7FB] border-none rounded-[14px] text-[18px] font-medium text-[#121417] outline-none appearance-none cursor-pointer;
+  width: 224px;
+  height: 48px;
+  padding: 14px 18px;
+  background-color: #f7f7fb;
+  border: none;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #121417;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
 }
 
 .selectPrice {
-  @apply w-[125px] h-[48px] px-[18px] py-[14px] bg-[#F7F7FB] border-none rounded-[14px] text-[18px] font-medium text-[#121417] outline-none appearance-none cursor-pointer;
+  width: 125px;
+  height: 48px;
+  padding: 14px 18px;
+  background-color: #f7f7fb;
+  border: none;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #121417;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
 }
 
 .mileageInputs {
-  @apply flex h-[48px];
+  display: flex;
+  height: 48px;
 }
 
 .inputMin {
-  @apply w-[160px] h-full px-[24px] bg-[#F7F7FB] border-none border-r border-[rgba(18,20,23,0.05)] rounded-l-[14px] text-[18px] font-medium text-[#121417] outline-none placeholder-[#121417];
+  width: 160px;
+  height: 100%;
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: #f7f7fb;
+  border: none;
+  border-right: 1px solid rgba(18, 20, 23, 0.05);
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #121417;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.inputMin::placeholder {
+  color: #121417;
 }
 
 .inputMax {
-  @apply w-[160px] h-full px-[24px] bg-[#F7F7FB] border-none rounded-r-[14px] text-[18px] font-medium text-[#121417] outline-none placeholder-[#121417];
+  width: 160px;
+  height: 100%;
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: #f7f7fb;
+  border: none;
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #121417;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.inputMax::placeholder {
+  color: #121417;
 }
 
 .searchBtn {
-  @apply h-[48px] px-[44px] bg-[#3470FF] hover:bg-[#0B44CD] text-white font-semibold text-[14px] rounded-[12px] transition-colors cursor-pointer;
+  height: 48px;
+  padding-left: 44px;
+  padding-right: 44px;
+  background-color: #3470ff;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 12px;
+  border: none;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.searchBtn:hover {
+  background-color: #0b44cd;
 }
 
 .statusText {
-  @apply text-center text-[18px] text-[#121417];
+  text-align: center;
+  font-size: 18px;
+  color: #121417;
 }
 
 .errorText {
-  @apply text-center text-[18px] text-red-500;
+  text-align: center;
+  font-size: 18px;
+  color: #ef4444;
 }
 
 .carsGrid {
-  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-[29px] gap-y-[50px] mb-[100px];
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 29px;
+  row-gap: 50px;
+  margin-bottom: 100px;
 }
 
 .carCard {
-  @apply flex flex-col h-[426px] w-full bg-white rounded-[14px] overflow-hidden;
+  display: flex;
+  flex-direction: column;
+  height: 426px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .imgContainer {
-  @apply relative w-full h-[268px] mb-[14px] bg-[#F3F3F2] rounded-[14px] overflow-hidden;
+  position: relative;
+  width: 100%;
+  height: 268px;
+  margin-bottom: 14px;
+  background-color: #f3f3f2;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .cardImg {
-  @apply w-full h-full object-cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .cardHeader {
-  @apply flex justify-between items-center mb-[8px] text-[16px] font-medium text-[#121417];
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #121417;
 }
 
 .cardTitle {
-  @apply truncate max-w-[80%];
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
 }
 
 .accentText {
-  @apply text-[#3470FF];
+  color: #3470ff;
 }
 
 .tagsInfo {
-  @apply flex flex-wrap gap-x-[6px] gap-y-[4px] text-[12px] font-normal text-[rgba(18,20,23,0.5)] leading-[18px] mb-[28px] overflow-hidden h-[40px];
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 6px;
+  row-gap: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(18, 20, 23, 0.5);
+  line-height: 18px;
+  margin-bottom: 28px;
+  overflow: hidden;
+  height: 40px;
 }
 
-.tagItem {
-  @apply after:content-['|'] after:ml-[6px] after:text-[rgba(18,20,23,0.1)] last:after:content-none;
+.tagItem::after {
+  content: "|";
+  margin-left: 6px;
+  color: rgba(18, 20, 23, 0.1);
+}
+
+.tagItem:last-child::after {
+  content: none;
 }
 
 .readMoreBtn {
-  @apply mt-auto flex justify-center items-center w-full h-[44px] bg-[#3470FF] hover:bg-[#0B44CD] text-white font-semibold text-[14px] rounded-[12px] transition-colors text-center;
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 44px;
+  background-color: #3470ff;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 12px;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.readMoreBtn:hover {
+  background-color: #0b44cd;
 }
 
 .loadMoreContainer {
-  @apply flex justify-center mb-[150px];
+  display: flex;
+  justify-content: center;
+  margin-bottom: 150px;
 }
 
 .loadMoreBtn {
-  @apply text-[16px] font-medium text-[#3470FF] hover:text-[#0B44CD] underline transition-colors cursor-pointer disabled:text-gray-400 disabled:no-underline;
+  font-size: 16px;
+  font-weight: 500;
+  color: #3470ff;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.loadMoreBtn:hover {
+  color: #0b44cd;
+}
+
+.loadMoreBtn:disabled {
+  color: #9ca3af;
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+/* Кнопка-сердечко поверх фотографії */
+.favoriteBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 16px;
+  height: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 10;
+  transition: transform 0.2s ease;
+}
+
+.favoriteBtn:hover {
+  transform: scale(1.1);
+}
+
+.heartIcon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 1.5;
+  transition:
+    fill 0.2s ease,
+    stroke 0.2s ease;
+}
+
+.activeHeart {
+  fill: #3470ff;
+  stroke: #3470ff;
 }

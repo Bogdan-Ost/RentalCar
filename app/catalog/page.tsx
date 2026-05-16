@@ -1,20 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import Select, { StylesConfig } from "react-select";
+import React, { useState, useMemo } from "react";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import Select from "react-select";
+
 import styles from "./catalog.module.css";
 import { getCars } from "@/lib/api/clientApi";
+import { getCustomSelectStyles } from "@/types/selectStyles";
 
-const brandOptions = [
-  { value: "Aston Martin", label: "Aston Martin" },
-  { value: "Audi", label: "Audi" },
-  { value: "Bentley", label: "Bentley" },
-  { value: "BMW", label: "BMW" },
-  { value: "Buick", label: "Buick" },
-  { value: "Chevrolet", label: "Chevrolet" },
-  { value: "HUMMER", label: "HUMMER" },
-  { value: "Subaru", label: "Subaru" },
+import { getFilterMetadata } from "@/lib/api/clientApi";
+
+const fallbackBrands = [
+  "Buick",
+  "Volvo",
+  "HUMMER",
+  "Subaru",
+  "Mitsubishi",
+  "Nissan",
+  "Lincoln",
 ];
 
 const priceOptions = Array.from({ length: 13 }, (_, i) => {
@@ -23,6 +26,26 @@ const priceOptions = Array.from({ length: 13 }, (_, i) => {
 });
 
 export default function CatalogPage() {
+  const { data: filterMetadata } = useQuery({
+    queryKey: ["filterMetadata"],
+    queryFn: async () => {
+      try {
+        return await getFilterMetadata();
+      } catch (error) {
+        console.warn(
+          "Ендпоінт /cars/filters повернув помилку. Використовуємо fallback.",
+        );
+        return { brands: fallbackBrands };
+      }
+    },
+    staleTime: Infinity,
+  });
+
+  const brandOptions = useMemo(() => {
+    const brandsList = filterMetadata?.brands || fallbackBrands;
+    return brandsList.map((brand) => ({ value: brand, label: brand }));
+  }, [filterMetadata]);
+
   const [selectedBrand, setSelectedBrand] = useState<{
     value: string;
     label: string;
@@ -34,6 +57,7 @@ export default function CatalogPage() {
   const [inputMinMileage, setInputMinMileage] = useState<string>("");
   const [inputMaxMileage, setInputMaxMileage] = useState<string>("");
 
+  // Основні стейти, які тригеруть запит у React Query після сабміту
   const [queryBrand, setQueryBrand] = useState<string>("");
   const [queryPrice, setQueryPrice] = useState<string>("");
   const [queryMinMileage, setQueryMinMileage] = useState<number | undefined>(
@@ -42,6 +66,23 @@ export default function CatalogPage() {
   const [queryMaxMileage, setQueryMaxMileage] = useState<number | undefined>(
     undefined,
   );
+
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("car_favorites");
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
+
+  const toggleFavorite = (carId: string) => {
+    const updatedFavorites = favorites.includes(carId)
+      ? favorites.filter((id) => id !== carId)
+      : [...favorites, carId];
+
+    setFavorites(updatedFavorites);
+    localStorage.setItem("car_favorites", JSON.stringify(updatedFavorites));
+  };
 
   const {
     data,
@@ -66,13 +107,18 @@ export default function CatalogPage() {
         maxMileage: queryMaxMileage,
       }),
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 12 ? allPages.length + 1 : undefined;
+    // Контроль пагінації на основі totalPages від сервера
+    getNextPageParam: (lastPage) => {
+      return lastPage.page < lastPage.totalPages
+        ? lastPage.page + 1
+        : undefined;
     },
   });
 
-  const cars = data?.pages.flat() || [];
+  // Збір плаского масиву машин з вкладених сторінок відповіді
+  const cars = data?.pages.flatMap((page) => page.cars) || [];
 
+  // Обробка натискання кнопки Search
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setQueryBrand(selectedBrand?.value || "");
@@ -81,112 +127,39 @@ export default function CatalogPage() {
     setQueryMaxMileage(inputMaxMileage ? Number(inputMaxMileage) : undefined);
   };
 
-  const customSelectStyles = (width: string): StylesConfig<any, false> => ({
-    control: (provided, state) => ({
-      ...provided,
-      width,
-      height: "48px",
-      backgroundColor: "#F7F7FB",
-      borderRadius: "14px",
-      border: "none",
-      boxShadow: "none",
-      paddingLeft: "8px",
-      fontFamily: "inherit",
-      fontSize: "18px",
-      fontWeight: "500",
-      color: "#121417",
-      cursor: "pointer",
-    }),
-    placeholder: (provided) => ({
-      ...provided,
-      color: "#121417",
-    }),
-    singleValue: (provided) => ({
-      ...provided,
-      color: "#121417",
-    }),
-    valueContainer: (provided) => ({
-      ...provided,
-      padding: "0 8px",
-    }),
-    indicatorSeparator: () => ({
-      display: "none",
-    }),
-    dropdownIndicator: (provided, state) => ({
-      ...provided,
-      color: "#121417",
-      transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : "none",
-      transition: "transform 0.2s ease",
-    }),
-    menu: (provided) => ({
-      ...provided,
-      backgroundColor: "#FFFFFF",
-      borderRadius: "14px",
-      border: "1px solid rgba(18, 20, 23, 0.05)",
-      boxShadow: "0px 4px 36px 0px rgba(0, 0, 0, 0.02)",
-      padding: "8px",
-      zIndex: 100,
-    }),
-    menuList: (provided) => ({
-      ...provided,
-      maxHeight: "272px",
-      "&::-webkit-scrollbar": {
-        width: "8px",
-      },
-      "&::-webkit-scrollbar-thumb": {
-        backgroundColor: "rgba(18, 20, 23, 0.05)",
-        borderRadius: "10px",
-      },
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      backgroundColor: "transparent",
-      color: state.isSelected ? "#121417" : "rgba(18, 20, 23, 0.2)",
-      fontSize: "16px",
-      fontWeight: "500",
-      padding: "8px 12px",
-      cursor: "pointer",
-      "&:hover": {
-        color: "#121417",
-        backgroundColor: "rgba(18, 20, 23, 0.03)",
-      },
-    }),
-  });
-
-  const getShortAddress = (address?: string) => {
-    if (!address || typeof address !== "string") return "N/A";
-    const parts = address.split(",");
-    if (parts.length < 3) return address;
-    return `${parts[parts.length - 2].trim()} | ${parts[parts.length - 1].trim()}`;
-  };
-
   return (
     <div className={styles.catalog}>
+      {/* Форма фільтрації */}
       <form onSubmit={handleSearchSubmit} className={styles.filterForm}>
+        {/* Селект Брендів */}
         <div className={styles.inputWrapper}>
           <label className={styles.label}>Car brand</label>
           <Select
+            instanceId="brand-select"
             options={brandOptions}
             value={selectedBrand}
             onChange={(option) => setSelectedBrand(option)}
             placeholder="Choose a brand"
-            styles={customSelectStyles("224px")}
-            isSearchable={true} // Дозволяє вводити текст пошуку як у макеті
+            styles={getCustomSelectStyles("224px")}
+            isSearchable={true}
           />
         </div>
 
+        {/* Селект Цін */}
         <div className={styles.inputWrapper}>
           <label className={styles.label}>Price / 1 hour</label>
           <Select
+            instanceId="price-select"
             options={priceOptions}
             value={selectedPrice}
             onChange={(option) => setSelectedPrice(option)}
             placeholder="To $"
-            styles={customSelectStyles("125px")}
+            styles={getCustomSelectStyles("125px")}
             isSearchable={false}
           />
         </div>
 
+        {/* Інпути пробігу */}
         <div className={styles.inputWrapper}>
           <label className={styles.label}>Ccars mileage / km</label>
           <div className={styles.mileageInputs}>
@@ -211,14 +184,28 @@ export default function CatalogPage() {
           Search
         </button>
       </form>
-
-      {isLoading && <p className={styles.statusText}>Loading...</p>}
+      \{isLoading && <p className={styles.statusText}>Loading...</p>}
       {isError && <p className={styles.errorText}>Error loading data.</p>}
-
       <div className={styles.carsGrid}>
         {cars.map((car) => (
           <div key={car.id} className={styles.carCard}>
             <div className={styles.imgContainer}>
+              <button
+                type="button"
+                className={styles.favoriteBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggleFavorite(car.id);
+                }}
+              >
+                <svg
+                  className={`${styles.heartIcon} ${favorites.includes(car.id) ? styles.activeHeart : ""}`}
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                </svg>
+              </button>
+
               <img
                 src={car.img}
                 alt={`${car.brand} ${car.model}`}
@@ -232,22 +219,24 @@ export default function CatalogPage() {
                 <span className={styles.accentText}>{car.model}</span>,{" "}
                 {car.year}
               </h3>
-              <span>{car.rentalPrice}</span>
+              <span>${car.rentalPrice}</span>
             </div>
 
+            {/* Теги характеристик автомобіля */}
             <div className={styles.tagsInfo}>
               <span className={styles.tagItem}>
-                {getShortAddress(car.address)}
+                {car.location?.city || "N/A"} | {car.location?.country || "N/A"}
               </span>
               <span className={styles.tagItem}>{car.rentalCompany}</span>
               <span className={styles.tagItem}>{car.type}</span>
               <span className={styles.tagItem}>{car.model}</span>
               <span className={styles.tagItem}>{car.id}</span>
               <span className={styles.tagItem}>
-                {car.functionalities?.[0] ?? "No functionalities"}
+                {car.features?.[0] ?? "Standard"}
               </span>
             </div>
 
+            {/* Кнопка Read more для нової вкладки */}
             <a
               href={`/catalog/${car.id}`}
               target="_blank"
@@ -259,7 +248,7 @@ export default function CatalogPage() {
           </div>
         ))}
       </div>
-
+      {/* Пагінація Load More */}
       {hasNextPage && (
         <div className={styles.loadMoreContainer}>
           <button

@@ -1,25 +1,36 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import styles from "./header.module.css";
 
 export default function Header() {
-  return (
-    <header>
-      <Link href="/">
-        <svg
-          width="134"
-          height="24"
-          viewBox="0 0 134 24"
-          fill="none"
-          xmlns="w3.org"
-        >
-          <path d="M10 4H2V20H10V18H4V13H9V11H4V6H10V4Z" fill="#3470FF" />
-          <path d="M15 8V20H17V8H15Z" fill="#121417" />
-        </svg>
-      </Link>
+  const pathname = usePathname();
 
-      <nav>
-        <Link href="/">Home</Link>
-        <Link href="/catalog">Catalog</Link>
-      </nav>
+  return (
+    <header className={styles.header}>
+      <div className={styles.container}>
+        <Link href="/" className={styles.logo}>
+          Rental<span className={styles.logoAccent}>Car</span>
+        </Link>
+
+        {/* Навігаційне меню */}
+        <nav className={styles.navigation}>
+          <Link
+            href="/"
+            className={`${styles.navLink} ${pathname === "/" ? styles.activeLink : ""}`}
+          >
+            Home
+          </Link>
+          <Link
+            href="/catalog"
+            className={`${styles.navLink} ${pathname.startsWith("/catalog") ? styles.activeLink : ""}`}
+          >
+            Catalog
+          </Link>
+        </nav>
+      </div>
     </header>
   );
 }
