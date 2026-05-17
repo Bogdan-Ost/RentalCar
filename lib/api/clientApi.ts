@@ -26,11 +26,9 @@ export const getCars = async (
     perPage: 12,
   };
 
-  Object.entries(filters).forEach(([key, value]) => {
-    if (value !== undefined && value !== "") {
-      params[key] = value;
-    }
-  });
+  if (filters.brand && filters.brand !== "") {
+    params.brand = filters.brand;
+  }
 
   const res = await carRentalApi.get<CarApiResponse>("/cars", { params });
 

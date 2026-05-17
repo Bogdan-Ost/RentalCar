@@ -57,7 +57,6 @@ export default function CatalogPage() {
   const [inputMinMileage, setInputMinMileage] = useState<string>("");
   const [inputMaxMileage, setInputMaxMileage] = useState<string>("");
 
-  // Основні стейти, які тригеруть запит у React Query після сабміту
   const [queryBrand, setQueryBrand] = useState<string>("");
   const [queryPrice, setQueryPrice] = useState<string>("");
   const [queryMinMileage, setQueryMinMileage] = useState<number | undefined>(
@@ -107,7 +106,6 @@ export default function CatalogPage() {
         maxMileage: queryMaxMileage,
       }),
     initialPageParam: 1,
-    // Контроль пагінації на основі totalPages від сервера
     getNextPageParam: (lastPage) => {
       return lastPage.page < lastPage.totalPages
         ? lastPage.page + 1
@@ -115,10 +113,8 @@ export default function CatalogPage() {
     },
   });
 
-  // Збір плаского масиву машин з вкладених сторінок відповіді
   const cars = data?.pages.flatMap((page) => page.cars) || [];
 
-  // Обробка натискання кнопки Search
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setQueryBrand(selectedBrand?.value || "");
