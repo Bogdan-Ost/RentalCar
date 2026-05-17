@@ -129,9 +129,7 @@ export default function CatalogPage() {
 
   return (
     <div className={styles.catalog}>
-      {/* Форма фільтрації */}
       <form onSubmit={handleSearchSubmit} className={styles.filterForm}>
-        {/* Селект Брендів */}
         <div className={styles.inputWrapper}>
           <label className={styles.label}>Car brand</label>
           <Select
@@ -145,7 +143,6 @@ export default function CatalogPage() {
           />
         </div>
 
-        {/* Селект Цін */}
         <div className={styles.inputWrapper}>
           <label className={styles.label}>Price / 1 hour</label>
           <Select
@@ -159,7 +156,6 @@ export default function CatalogPage() {
           />
         </div>
 
-        {/* Інпути пробігу */}
         <div className={styles.inputWrapper}>
           <label className={styles.label}>Ccars mileage / km</label>
           <div className={styles.mileageInputs}>
@@ -184,7 +180,7 @@ export default function CatalogPage() {
           Search
         </button>
       </form>
-      \{isLoading && <p className={styles.statusText}>Loading...</p>}
+      s{isLoading && <p className={styles.statusText}>Loading...</p>}
       {isError && <p className={styles.errorText}>Error loading data.</p>}
       <div className={styles.carsGrid}>
         {cars.map((car) => (
