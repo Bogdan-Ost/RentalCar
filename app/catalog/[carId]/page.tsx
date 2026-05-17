@@ -59,7 +59,6 @@ export default function CarDetailsPage() {
   return (
     <div className={styles.pageDesktopContainer}>
       <div className={styles.layoutDesktopGrid}>
-        {/* Ліва колонка: Фото та Форма */}
         <div className={styles.leftContentBlock}>
           <div className={styles.mainImageWrapper}>
             <Image

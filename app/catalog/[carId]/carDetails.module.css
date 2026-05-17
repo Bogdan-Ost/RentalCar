@@ -145,7 +145,6 @@
   margin-bottom: 8px;
 }
 
-/* Головний заголовок авто (Ag h2 - 24/32) */
 .carTitleMain {
   font-family: var(--font-manrope), sans-serif;
   font-size: 1.5rem; /* 24px */
@@ -155,7 +154,6 @@
   color: #121417;
 }
 
-/* ID автомобіля */
 .carIdBadge {
   font-family: var(--font-inter), sans-serif;
   color: rgba(18, 20, 23, 0.1);
@@ -163,54 +161,47 @@
   font-weight: 500;
 }
 
-/* Рядок локації та пробігу (Ag body 2 - 12/15) */
 .carMetaLine {
   font-family: var(--font-inter), sans-serif;
-  font-size: 0.75rem; /* 12px */
-  line-height: 1.25; /* 15px */
-  color: rgba(18, 20, 23, 0.5);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  color: rgba(18, 20, 23, 1);
   margin-bottom: 16px;
 }
 
 .dotDivider {
   margin: 0 6px;
-  color: rgba(18, 20, 23, 0.1);
+  color: rgba(18, 20, 23, 1);
 }
 
-/* Ціна за добу (Ag h2 - 24/32) */
 .carPriceTag {
   font-family: var(--font-manrope), sans-serif;
   font-size: 1.5rem; /* 24px */
   font-weight: 700;
   line-height: 1.33;
-  margin: 0 0 24px 0; /* Відступ від ціни до тексту опису */
-  color: #121417;
+  margin: 0 0 24px 0;
+  color: #3470ff;
 }
 
-/* Текстовий опис (Ag body - 16/20) */
 .carDescriptionBody {
   font-family: var(--font-inter), sans-serif;
-  font-size: 1rem; /* 16px */
-  line-height: 1.25; /* 20px */
+  font-size: 1rem;
+  line-height: 1.25;
   color: #121417;
   margin: 0;
 }
 
-/* ==========================================================================
-   4. ГРУПА ХАРАКТЕРИСТИК (Точний великий Auto Layout відступ від опису)
-   ========================================================================== */
 .specsGroupContainer {
+  margin-top: 68px;
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Відступ 20px між Rental Conditions, Car Specs та Accessories */
-  margin-top: 110px; /* ТОЧНИЙ ВІДСТУП: Штовхає всю групу характеристик вниз від опису */
+  gap: 110px;
 }
 
 .specsSection {
-  margin-bottom: 0; /* Відступами повністю керує gap контейнера specsGroupContainer */
+  margin-bottom: 0;
 }
 
-/* Заголовки підсекцій (Ag body з жирністю Semibold) */
 .specsSectionTitle {
   font-family: var(--font-inter), sans-serif;
   font-size: 0.875rem;
@@ -220,11 +211,6 @@
   color: #121417;
 }
 
-/* ==========================================================================
-   5. ВНУТРІШНІ СПИСКИ (Підвищена специфічність для надійного скидання маркерів)
-   ========================================================================== */
-
-/* Умови оренди (Rental Conditions) */
 .specsSection ul.conditionsListStack {
   list-style: none;
   padding: 0;
@@ -266,7 +252,7 @@
 }
 
 .specLabel {
-  color: rgba(18, 20, 23, 0.5); /* Напівпрозорий для назв характеристик */
+  color: rgba(18, 20, 23, 1);
   margin-right: 4px;
 }
 
@@ -284,31 +270,25 @@
   font-family: var(--font-inter), sans-serif;
   display: flex;
   align-items: center;
-  font-size: 0.75rem; /* 12px під загальний розмір списків */
-  line-height: 1.25; /* 15px */
+  font-size: 0.75rem;
+  line-height: 1.25;
   color: #121417;
   list-style-type: none;
 }
 
-/* ==========================================================================
-   6. УНІВЕРСАЛЬНИЙ ЗАХИСТ ІКОНОК ВІД ДЕФОРМАЦІЇ (Суворо 16x16px)
-   ========================================================================== */
 .specIcon,
 .conditionCheckIcon,
 .accessoryCheckIcon {
   width: 16px;
   height: 16px;
-  min-width: 16px; /* Жорстко блокує звуження іконок по горизонталі */
+  min-width: 16px;
   min-height: 16px;
-  flex-shrink: 0; /* Повністю забороняє браузерам стискати SVG в овали */
+  flex-shrink: 0;
   margin-right: 8px;
   display: inline-block;
-  color: #121417; /* Єдиний темний колір для всіх іконок правої колонки */
+  color: #121417;
 }
 
-/* ==========================================================================
-   7. МОДАЛЬНЕ ВІКНО УСПІХУ ТА СТАТУСИ ЗАВАНТАЖЕННЯ
-   ========================================================================== */
 .modalFixedOverlay {
   position: fixed;
   inset: 0;
