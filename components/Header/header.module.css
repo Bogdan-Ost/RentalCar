@@ -5,41 +5,25 @@
 }
 
 .container {
-  /* Фіксована ширина десктопа згідно з вашими попередніми сторінками */
   width: 1150px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-  height: 72px; /* Стандартна висота хедера за макетом */
+  height: 72px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
 }
 
-/* Логотип */
-.logo {
-  font-family: sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: #121417;
-  text-decoration: none;
-  letter-spacing: -0.02em;
-}
-
-.logoAccent {
-  color: #3470ff; /* Фірмовий синій колір */
-}
-
-/* Навігація */
 .navigation {
   display: flex;
-  gap: 2rem; /* Відстань між посиланнями */
+  gap: 2rem;
 }
 
 .navLink {
-  font-family: sans-serif;
+  font-family: var(--font-family);
   font-size: 16px;
   font-weight: 500;
   color: #121417;
@@ -53,7 +37,6 @@
   color: #3470ff;
 }
 
-/* Активний стан посилання згідно з макетом (синій колір) */
 .activeLink {
   color: #3470ff;
   font-weight: 600;
