@@ -180,7 +180,7 @@ export default function CatalogPage() {
           Search
         </button>
       </form>
-      s{isLoading && <p className={styles.statusText}>Loading...</p>}
+      {isLoading && <p className={styles.statusText}>Loading...</p>}
       {isError && <p className={styles.errorText}>Error loading data.</p>}
       <div className={styles.carsGrid}>
         {cars.map((car) => (
